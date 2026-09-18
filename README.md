@@ -25,6 +25,23 @@ named in language. No teleoperation, fully autonomous.*
 
 </div>
 
+## Research Fork: Adaptive Memory
+
+This fork studies replacing SlowFast history compression with adaptive memory on
+R2R and RxR (VLN-CE). The agreed sequence is original-model evaluation, memory-only
+training with the rest of LightNav frozen, and later joint LLM training. VSI weight
+initialization is not part of the current phase.
+
+See the [experiment and pre-GPU preparation plan](docs/ADAPTIVE_MEMORY_EXPERIMENT_PLAN.md)
+for the protocol, pinned model revision, preparation checklist, and GPU safety gates.
+Research experiments have not run yet; the upstream method and results below are
+preserved as reference, not reported as this fork's reproductions.
+
+[CPU-only asset preparation](docs/NAV_ASSET_PREPARATION.md) provides pinned downloads
+and preflight checks, including explicit rejection of HM3D as an R2R/RxR scene substitute.
+The [MP3D acquisition and durable-storage plan](docs/DATA_AND_DURABILITY.md) records
+the dedicated `lightnav-runtime` Blob namespace, verified asset snapshot, and recovery commands.
+
 ## 🏡 About
 
 <div align="center">

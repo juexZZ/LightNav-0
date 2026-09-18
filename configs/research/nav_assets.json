@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "3015508b70fb6e30bbd66701e94c9b916dcb8df8",
+  "model": {
+    "repo_id": "LightOriginsHQ/LightNav-0",
+    "revision": "826dc5fbfa37afa8293d2e336d329b6ffc0bfb64",
+    "files": [
+      "README.md",
+      "config.json",
+      "eval_config.json",
+      "processor_config.json",
+      "chat_template.jinja",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "model.safetensors.index.json",
+      "model-00001-of-00001.safetensors",
+      "action_tokenizer/manifest.json",
+      "action_tokenizer/alpha_per_source.json",
+      "action_tokenizer/jacobian_weights.npy",
+      "action_tokenizer/codebook_l0.npy",
+      "action_tokenizer/codebook_l1.npy",
+      "action_tokenizer/codebook_l2.npy",
+      "action_tokenizer/distance_l0.npy",
+      "action_tokenizer/distance_l1.npy",
+      "action_tokenizer/distance_l2.npy"
+    ]
+  },
+  "datasets": {
+    "r2r": {
+      "directory": "R2R_VLNCE_v1-3_preprocessed",
+      "google_drive_id": "1fo8F4NKgZDH-bPSdVU3cONAkt5EW-tyr",
+      "episodes": "{split}.json.gz",
+      "ground_truth": "{split}_gt.json.gz",
+      "languages": [],
+      "val_unseen_count": 1839
+    },
+    "rxr": {
+      "directory": "RxR_VLNCE_v0",
+      "google_drive_id": "145xzLjxBaNTbVgBfQ8e9EsBAV8W-SM0t",
+      "episodes": "{split}_guide.json.gz",
+      "ground_truth": "{split}_guide_gt.json.gz",
+      "languages": ["en-US", "en-IN"],
+      "val_unseen_count": 3669
+    }
+  },
+  "annotation_source": "https://github.com/jacobkrantz/VLN-CE#data",
+  "scene_family": "mp3d",
+  "scene_access": "User-authorized Matterport3D assets required; HM3D is not interchangeable.",
+  "allowed_splits": ["train", "val_seen", "val_unseen"]
+}

@@ -179,3 +179,34 @@ Frames within one session must share one size (the first frame decides; `reset` 
 over). `keep` avoids geometric distortion but changes the token grid the model sees, which
 the released checkpoint was not trained on — validate on your robot before relying on it.
 Full native resolution (feeding the camera's own pixel count) is not supported.
+
+## Research asset tools (no GPU)
+
+See [Navigation asset preparation](NAV_ASSET_PREPARATION.md) for isolated setup and examples.
+These scripts are not inference/server entry points and never launch a simulator.
+
+| Script | Flag | Meaning |
+| --- | --- | --- |
+| Both | `--manifest PATH` | Source manifest; defaults to `configs/research/nav_assets.json` |
+| Both | `--data-root PATH` | Required independent root for model, annotations and provenance |
+| `prepare_nav_assets.py` | `--model` | Explicitly download and verify the pinned public checkpoint |
+| `prepare_nav_assets.py` | `--annotations` | Explicitly download public R2R/RxR annotations; not MP3D scenes |
+| `prepare_nav_assets.py` | `--limit-mib N` | Per-download MiB/s cap, 1–64; default 16; one download at a time |
+| `preflight_nav_assets.py` | `--scenes-dir PATH` | Root containing `mp3d/`; default `<data-root>/data/scene_datasets` |
+| `preflight_nav_assets.py` | `--splits SPLIT...` | `train`, `val_seen`, `val_unseen`; default only `val_unseen` |
+| `preflight_nav_assets.py` | `--verify-sha256` | Rehash all model files, in addition to default structural/size checks |
+| `preflight_nav_assets.py` | `--output PATH` | Required JSON report path; exit 0 for local checks passed, 2 for blocked |
+
+## Durable research snapshots
+
+`python3 scripts/backup_lightnav_runtime.py {publish,verify,restore}` never loads a model.
+See [data and durability](DATA_AND_DURABILITY.md) for permissions and recovery semantics.
+
+| Flag | Meaning |
+| --- | --- |
+| `--root PATH` | Default `/mnt/blob-data-sigmasystem-out/juexiao/lightnav-runtime`; publishing refuses any other root |
+| `--category NAME` | Required: `assets`, `code`, `environments`, `experiments`, `checkpoints` |
+| `--snapshot ID` | Required immutable snapshot ID, not a filesystem path |
+| `--source PATH` | Required for publish; stable source tree, never an active checkpoint |
+| `--destination PATH` | Required for restore; refuses to overwrite differing local files |
+| `--limit-mib N` | Sequential copy cap, 1–64 MiB/s, default 32; checksum reads are separate |

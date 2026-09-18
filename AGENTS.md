@@ -1,5 +1,30 @@
 # AGENTS.md
 
+## Research fork priorities
+
+For adaptive-memory research, follow
+[the experiment plan](docs/ADAPTIVE_MEMORY_EXPERIMENT_PLAN.md). It records the agreed
+R2R/RxR baseline, memory-only training followed by possible LLM unfreezing, and the
+explicit exclusion of VSI checkpoint initialization from the current phase.
+
+All eight GPUs are reserved for the higher-priority VSI experiment until the user
+explicitly releases resources. Before that, do not start model inference, training,
+feature extraction, GPU smoke tests, or Habitat/EGL rendering. Do not auto-launch
+jobs when a GPU appears idle. Use isolated environments and bounded CPU/I/O; never
+modify the VSI code, environment, processes, checkpoints, or backup controllers.
+
+All LightNav backups use
+`/mnt/blob-data-sigmasystem-out/juexiao/lightnav-runtime`, never `spmem-runtime`.
+Follow [the data/durability runbook](docs/DATA_AND_DURABILITY.md): immutable snapshots,
+independent SHA-256 readback, and a completion marker written last. Back up completed
+development/experiment milestones explicitly; no continuous backup daemon is configured.
+
+Maintain `origin` as the user's `juexZZ/LightNav-0` fork and `upstream` as
+`lightorigins/LightNav-0`. Record planned, CPU-verified, and GPU-verified work
+separately. Do not equate remote configuration with a commit or push. The upstream
+bring-up notes below apply only when that bring-up is requested and resources are
+authorized; they do not authorize starting a server during research preparation.
+
 Working notes for coding agents. The goal this file optimises for: **bring up
 `lightnav-serve` and drive the MuJoCo demo against it, end to end, without a robot.**
 Human-facing documentation lives in [docs/GETTING_STARTED.md](docs/GETTING_STARTED.md).
@@ -56,9 +81,10 @@ fall back silently.
 hf download LightOriginsHQ/LightNav-0 --local-dir checkpoints/LightNav-0
 ```
 
-Requires a Hugging Face login (`hf auth login`) and, if the repo is gated, an approved
-access request. An agent cannot complete either. If `hf download` fails on auth, stop and
-ask; do not substitute another checkpoint.
+The research-pinned revision was publicly downloadable without login on 2026-09-18;
+see [asset preparation](docs/NAV_ASSET_PREPARATION.md). If access later requires a
+Hugging Face login (`hf auth login`) or an approved gated-repo request, a human must
+complete it. If downloading fails on auth, stop and ask; do not substitute a checkpoint.
 
 A valid checkpoint directory holds `config.json`, `model*.safetensors`, `tokenizer*`,
 `processor_config.json`, `eval_config.json` and an `action_tokenizer/` bundle. When
