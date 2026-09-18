@@ -100,6 +100,13 @@ def publish(source: Path, snapshot: Path, category: str, rate_mib: int) -> dict:
         'files': [{'path': path.relative_to(source).as_posix(), 'bytes': path.stat().st_size,
                    'sha256': digest(path)} for path in files],
     }
+    if category == 'code':
+        manifest['git_commit'] = subprocess.check_output(
+            ['git', '-C', str(source), 'rev-parse', 'HEAD'], text=True,
+        ).strip()
+        manifest['git_worktree_dirty'] = bool(subprocess.check_output(
+            ['git', '-C', str(source), 'status', '--porcelain'], text=True,
+        ).strip())
     raw = (json.dumps(manifest, indent=2, sort_keys=True) + '\n').encode()
     if (snapshot / 'COMPLETE.json').exists():
         old, _ = load_snapshot(snapshot)

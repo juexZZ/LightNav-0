@@ -1,9 +1,11 @@
 # Adaptive memory 替代 SlowFast：实验与 GPU 前准备计划
 
-更新日期：2026-09-18。状态：**模型与 annotations 已准备、CPU 预检已执行；缺 MP3D 场景，尚未运行导航实验。**
+更新日期：2026-09-18。状态：**资产已持久化；独立环境、baseline dry-run 和 memory 接口已准备；缺 MP3D，尚未运行导航实验。**
 
 本轮执行证据见 [资产准备状态报告](NAV_ASSET_STATUS_20260918.md)，使用方法见
 [CPU-only 资产准备](NAV_ASSET_PREPARATION.md)。这不代表模型推理或 Habitat 已跑通。
+后续准备见 [环境、dry-run 与 memory 契约](PRE_GPU_RUNTIME_AND_MEMORY.md)，持久备份见
+[数据获取与 lightnav-runtime](DATA_AND_DURABILITY.md)。
 
 本文是 `juexZZ/LightNav-0` 研究 fork 的执行依据。上游 README 的结果是作者报告，
 不是本 fork 已复现的结果。更新任务状态时必须记录证据，不能把“脚本已写好”标成
@@ -109,8 +111,8 @@ B0 先使用发布配置；随后在单独实验配置中调整 SlowFast 历史�
 
 ## 4. GPU 空闲前可以完成的准备
 
-以下按执行优先级排列。P0、本轮公开模型／annotation 资产准备及 CPU 资产预检已完成；
-MP3D 场景、完整模型／Habitat 环境、评测 wrapper、memory 与 trainer 仍待完成。
+以下按执行优先级排列。P0、公开资产、持久备份、独立环境 CPU imports、baseline dry-run
+及 memory session 契约已完成；MP3D、真实 memory writer/backend 绑定及 trainer 仍待完成。
 
 | 优先级 | 工作包 | 交付与 CPU 验收 | 边界／依赖 |
 |---|---|---|---|
@@ -231,14 +233,14 @@ RVQ 训练样本。已检查的 `src/lightnav/traj_vocab.py` 提供 RVQ 加载�
 
 | 状态 | 事项 |
 |---|---|
-| 已完成 | 研究协议与 fork 配置；模型 18 文件发布方校验；R2R/RxR 12 个 annotation/GT 文件；独立资产环境；下载／CPU 预检工具；47 项选定 CPU tests |
+| 已完成 | 研究协议与 fork；模型 18 文件和 12 个 annotation/GT 文件；35 文件 Blob 回读校验；独立模型/Habitat 环境 CPU imports；baseline dry-run；增量 memory session 契约 |
 | 外部依赖 | 用户提供的 HM3D 900 个场景 ID 与所需 MP3D 72 个 ID 零交集；仍需定位授权 MP3D 场景 |
-| 待执行 | 完整推理／训练及 Habitat 环境；基线评测 dry-run wrapper；独立持久备份方案 |
-| 待实现 | 训练数据流水线、memory 接入、memory-only trainer、效率 profiler 及对应 CPU tests |
+| 待执行 | MP3D 授权获取和预检；GPU/EGL 验证；按已定义里程碑策略继续备份 |
+| 待实现 | 训练数据流水线、真实 adaptive writer/读出及 HF DeepStack/mRoPE 接入、memory-only trainer、效率 profiler |
 | 待 GPU | 真实渲染、原始模型复现、真实训练样本／特征生成、M1 训练与闭环评测 |
 | 后续阶段 | LLM 解冻的 B2/M2；VSI 初始化迁移研究另立方案 |
 
-近期执行顺序：**补齐 MP3D／环境及 baseline dry-run → 标签协议与 memory 接口 → trainer／测试 → 等待 GPU gate。**
+近期执行顺序：**获取 MP3D；继续标签协议与真实 writer/backend 绑定 → trainer／测试 → 等待 GPU gate。**
 关键外部依赖是 MP3D 授权资产；关键实现依赖是与发布模型一致的训练输出监督。
 
 ## 7. 核对依据

@@ -210,3 +210,22 @@ See [data and durability](DATA_AND_DURABILITY.md) for permissions and recovery s
 | `--source PATH` | Required for publish; stable source tree, never an active checkpoint |
 | `--destination PATH` | Required for restore; refuses to overwrite differing local files |
 | `--limit-mib N` | Sequential copy cap, 1–64 MiB/s, default 32; checksum reads are separate |
+
+## Baseline plan and environment receipts
+
+See [pre-GPU runtime and memory](PRE_GPU_RUNTIME_AND_MEMORY.md). `plan_nav_baseline.py`
+is dry-run only: it never starts a server or uses a GPU, and has no execute option.
+
+| Script | Flag | Meaning |
+| --- | --- | --- |
+| `plan_nav_baseline.py` | `--data-root PATH` | Required model/annotation root |
+| `plan_nav_baseline.py` | `--scenes-dir PATH` | Root containing MP3D; default `<data-root>/data/scene_datasets` |
+| `plan_nav_baseline.py` | `--output-root PATH` | Required new plan directory; never overwrites an existing plan |
+| `plan_nav_baseline.py` | `--gpu-ids ID...` | Required proposed future GPU IDs; unique and non-negative; no GPU inspection |
+| `plan_nav_baseline.py` | `--backend {hf,vllm_local}` | Future evaluator backend; default `vllm_local` |
+| `plan_nav_baseline.py` | `--episodes N` | Per shard; default `-1` for the whole split |
+| `plan_nav_baseline.py` | `--base-port PORT` | First proposed ZMQ port; default 5555 |
+| Both | `--model-python PATH` | Default `<repo>/.venv/bin/python`; preserves the venv symlink path |
+| Both | `--habitat-python PATH` | Default `$HOME/envs/lightnav-habitat/bin/python` |
+| `capture_lightnav_environments.py` | `--output PATH` | Required new empty receipt directory |
+| `capture_lightnav_environments.py` | `--micromamba PATH` | Default `$HOME/lightnav_tools/micromamba`, used only for environment listing |

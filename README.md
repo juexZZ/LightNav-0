@@ -41,6 +41,9 @@ preserved as reference, not reported as this fork's reproductions.
 and preflight checks, including explicit rejection of HM3D as an R2R/RxR scene substitute.
 The [MP3D acquisition and durable-storage plan](docs/DATA_AND_DURABILITY.md) records
 the dedicated `lightnav-runtime` Blob namespace, verified asset snapshot, and recovery commands.
+See [pre-GPU environments, baseline plans and memory contracts](docs/PRE_GPU_RUNTIME_AND_MEMORY.md)
+for isolated setup and the new incremental interface. The interface is not yet a learned
+navigation memory implementation or an operational replacement for SlowFast.
 
 ## 🏡 About
 

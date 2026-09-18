@@ -11,8 +11,10 @@ train/validation annotations. Do not rename HM3D scenes or change the benchmark.
 ### MP3D acquisition plan (human access required)
 
 1. Follow the [official Matterport3D access instructions](https://niessner.github.io/Matterport/)
-   to obtain authorized access and its official download script. A human must review
-   and accept the applicable terms. The agent must not substitute mirrors or accept them.
+   to obtain authorized access and its official download script. The project page
+   currently asks a human to sign the Terms of Use and send them to
+   `matterport3d@googlegroups.com`. The agent must not sign/accept terms on the user's
+   behalf or substitute mirrors.
 2. Follow the [VLN-CE scene preparation instructions](https://github.com/jacobkrantz/VLN-CE#data),
    using the official script's Habitat scene package. No restricted MP3D download has
    been performed yet. Inspect that script's actual version/CLI before running it.
